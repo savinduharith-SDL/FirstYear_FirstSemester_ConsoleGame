@@ -1,6 +1,9 @@
 #include<iostream>
 #include<cstdlib>
 #include<stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include<conio.h> // cls
 
 using namespace std;
 
@@ -11,21 +14,32 @@ void Export();
 void InvalidInput();
 void HighScoreViewer();
 void CompareSelection(int n);
+bool gameLogic(int pcGenrated, int userSelection); 
+void printScissor();
+void print_rock();
+void credits();
+void print_welcome();
+
 int main()
-{
-  welcomeScreen();
-  
-  
-  
-  
+{	
+  print_welcome();
+  usleep(999999);
+  usleep(99999);
+  system("CLS");
+  printScissor();
+  cout <<"\n\n\n\n";
+  print_rock();
+  cout <<"\n\n\n\n";
+  welcomeScreen();  
 }
 
 
 
 void welcomeScreen()
 {
+  system("CLS");
   int userSelection;
-  cout << "1 . Start\n2. Export\n3. HighScore\n4. Quit\n :";
+  cout << "1 . Start\n2. Export\n3. HighScore\n4. Quit\n5. Credits :";
   cin >> userSelection;
   switch(userSelection)
   {
@@ -49,6 +63,11 @@ void welcomeScreen()
         QuitGame();
         break;
       }
+    case 5:
+      {
+        credits();
+        break;
+      }
     default :
       {
         InvalidInput();
@@ -67,7 +86,8 @@ while(true)
   int selection ;
   
   cout << "\nPlease select the item\n" ;
-  cout << "1.Rock\n2.paper\n3.scisor \n :";
+  cout << "1.Rock\n2.paper\n3.scisor \n ";
+  cout << "\nPress 4 to go to the title screen\n :" ;
   cin >> selection ;
   
   switch(selection)
@@ -88,23 +108,71 @@ while(true)
         cout << "You have selected Scissor." ;
         break;
       } 
-    
+      
+    case 4 :
+      {
+				welcomeScreen() ;
+        break;
+        
+      }   
     default :  //invalid ekata danna
       {
-  			cout << "Invalid input" ;
+  			cout << "Invalid input.please select again\n" ;
+        GameCore(); 
   			break;
       }
   }
   
     CompareSelection(selection);
   
-  
+  	cout << "\n.............................................................................\n";  
 }
+
 }
 
 
 void Export()
 {
+  
+  
+  
+  
+  
+  
+  
+}
+
+void credits()
+{
+  const char rocket[] =
+"                         Production crew: \n\
+          \n\
+          \n\
+                        IM/2019/009-Malshan\n\
+          \n\
+                        IM/2019/023-Tharuka\n\
+          \n\
+                        IM/2019/025-Savindu\n\
+          \n\
+                        IM/2019/067-Isal\n\
+          \n\
+";
+for (int i = 0; i < 50; i ++)
+{
+	printf("\n"); // go to the bottom of the console while creating free spaces 
+}
+printf("%s", rocket);
+int j = 399999;
+for (int i = 0; i < 30; i ++) {
+        usleep(j);
+        printf("\n"); // move rocket a line upward
+    }
+	printf("Thanks you for playing!");
+  usleep(999999);
+  usleep(99999); 
+  system("CLS");
+  welcomeScreen();
+    
 }
 
 
@@ -119,13 +187,19 @@ void InvalidInput()
 {
   cout << "Something went wrong!\n";
   cout << "Please enter a valid input !";
+  
 }
+
+
 
 
 void HighScoreViewer()
 {
 	
 }
+
+
+
 void CompareSelection(int n)
 {
 
@@ -135,8 +209,6 @@ void CompareSelection(int n)
   //randomly generate;
   int randomNum;
   randomNum = (rand() % 3) + 1;
-
-	
 	switch(randomNum)
   {
     case 1 :        
@@ -158,10 +230,27 @@ void CompareSelection(int n)
      {
    			cout << "Internal error! debug log" ;    //debug log   
      }  
+    
+  }
+  
+  
+  if(randomNum != n)
+  {
+    bool status = gameLogic(randomNum, n);
+    if(status)
+    {
+      cout<< "\nYou won the game!\n";
+    }
+    else
+    {
+      cout<< "\nYou lose the game!\n";
+    }
+  }
+  else if(randomNum == n)
+  {
+    cout << "\nDraw\n";
   }
 
-	
-  
 }
 
 
@@ -199,6 +288,97 @@ bool gameLogic(int pcGenrated, int userSelection)
     return false;
   }
 }
+
+
+void printScissor()
+{
+	cout<<" . . . . . . . . . . . . . . . .  . . . . . . \n" ;
+	cout<<" . . .@@@@@@ . . . .  SCISSOR  . . . . . . . .\n" ; 
+	cout<<" . . @@@ @@@@@ . . . . . . . . . . . . .@@@@@.\n" ; 
+	cout<<". . @@       @@ . . . . . . . . . @@@@@@@@. ..\n" ; 
+	cout<<". . . @@@@  @@@ . . . . . . . @@@@@@@@. . . ..\n" ;  
+	cout<<" . . . . .@@@@@@ . . . . .@@@@@@@@ . . . . . .\n" ;
+	cout<<" . . . . . . . @@@@@ .@@@@@@@. . . . . . . . .\n" ;
+	cout<<". . . . . . . . . @@@@@@@ . . . . . . . . . ..\n" ; 
+	cout<<". . . . . . . @@@@@@@ .@@@@@@ . . . . . . . ..\n" ;
+	cout<<" . . . . @@@@@@@@@ . . . . @@@@@@@ . . . . . .\n" ;
+	cout<<" . . @@@@       @@ . . . . . . @@@@@@@ . . . .\n" ;
+	cout<<". .@@@        @@@ . . . . . . . .  @@@@@@@  ..\n" ; 
+	cout<<". . @@@@@@@@@@@ . . . . . . . . . . . .@@@@@..\n" ; 
+	cout<<" . . . . . . . . . . . . . . . . . . . . . .  \n" ;
+}
+
+void print_rock()
+{
+	cout << "..............@@@@@@@@@@@@..............\n";
+	cout << ".........  @@@@@@@@@@@@@@@@@............\n";
+	cout << "........@@@@@@@@@@@@@@@@@@@@@@@.........\n";
+	cout << "......@@@@@@@@@@@@@@@@@@@@@@@@@@........\n";
+	cout << "....@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@......\n";
+	cout << "..@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@.....\n";
+	cout << ".@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@....\n";
+	cout << ".@@@@@@@@@@@@   ROCK   @@@@@@@@@@@@@....\n";
+	cout << "..@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@.....\n";
+	cout << "....@@@@@@@@@@@@@@@@@@@@@@@@@@@@@.......\n";
+	cout << ".....@@@@@@@@@@@@@@@@@@@@@@@@@@@........\n";
+	cout << ".......@@@@@@@@@@@@@@@@@@@@@@@..........\n";
+	cout << ".. ......@@@@@@@@@@@@@@@@@@@............\n";
+	cout << "...........@@@@@@@@@@@@@@@..............\n";
+}
+
+void print_paper()
+{
+	cout << "..................................\n" ;
+	cout << "..@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..\n" ;
+	cout << "..@@@@@@@@@@@@@@@@           @@@..\n" ;
+	cout << "..@@@@@@@@@@@@@@@@   Paper   @@@..\n" ;
+	cout << "..@@@@@@@@@@@@@@@@           @@@..\n" ;
+	cout << "..@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..\n" ;
+	cout << "..@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..\n" ;
+	cout << "..@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..\n" ;
+	cout << "..@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..\n" ;
+	cout << "..@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..\n" ;
+	cout << "..@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..\n" ;
+	cout << "..@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..\n" ;
+	cout << "..@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..\n" ;
+	cout << "..................................\n" ;
+}
+
+
+void print_welcome()
+{
+cout <<  "`8.`888b                 ,8' 8 8888888888   8 8888         ,o888888o.        ,o888888o.           ,8.       ,8.          8 8888888888   \n ";
+cout <<  " `8.`888b               ,8'  8 8888         8 8888        8888     `88.   . 8888     `88.        ,888.     ,888.         8 8888         \n ";
+cout <<  "  `8.`888b             ,8'   8 8888         8 8888     ,8 8888       `8. ,8 8888       `8b      .`8888.   .`8888.        8 8888         \n ";
+cout <<  "   `8.`888b     .b    ,8'    8 8888         8 8888     88 8888           88 8888        `8b    ,8.`8888. ,8.`8888.       8 8888         \n ";
+cout <<  "    `8.`888b    88b  ,8'     8 888888888888 8 8888     88 8888           88 8888         88   ,8'8.`8888,8^8.`8888.      8 888888888888 \n ";
+cout <<  "     `8.`888b .`888b,8'      8 8888         8 8888     88 8888           88 8888         88  ,8' `8.`8888' `8.`8888.     8 8888         \n ";
+cout <<  "      `8.`888b8.`8888'       8 8888         8 8888     88 8888           88 8888        ,8P ,8'   `8.`88'   `8.`8888.    8 8888         \n ";
+cout <<  "       `8.`888`8.`88'        8 8888         8 8888     `8 8888       .8' `8 8888       ,8P ,8'     `8.`'     `8.`8888.   8 8888         \n ";
+cout <<  "        `8.`8' `8,`'         8 8888         8 8888        8888     ,88'   ` 8888     ,88' ,8'       `8        `8.`8888.  8 8888         \n ";
+cout <<  "         `8.`   `8'          8 888888888888 8 888888888888 `8888888P'        `8888888P'  ,8'         `         `8.`8888. 8 888888888888 \n ";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
 
 
 
