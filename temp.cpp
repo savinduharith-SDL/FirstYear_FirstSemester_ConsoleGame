@@ -19,17 +19,15 @@ void printScissor();
 void print_rock();
 void credits();
 void print_welcome();
-
+void Select_elements_inline();
+void print_paper();
+void print_main_menu();
 int main()
 {	
   print_welcome();
   usleep(999999);
   usleep(99999);
   system("CLS");
-  printScissor();
-  cout <<"\n\n\n\n";
-  print_rock();
-  cout <<"\n\n\n\n";
   welcomeScreen();  
 }
 
@@ -39,7 +37,8 @@ void welcomeScreen()
 {
   system("CLS");
   int userSelection;
-  cout << "1 . Start\n2. Export\n3. HighScore\n4. Quit\n5. Credits :";
+  print_main_menu();
+  cout << "1. Start\n2. Export\n3. HighScore\n4. Quit\n5. Credits :";
   cin >> userSelection;
   switch(userSelection)
   {
@@ -82,30 +81,31 @@ void GameCore()
   
 //selection part 
 while(true)
-{
+{ 
+
   int selection ;
-  
-  cout << "\nPlease select the item\n" ;
-  cout << "1.Rock\n2.paper\n3.scisor \n ";
-  cout << "\nPress 4 to go to the title screen\n :" ;
-  cin >> selection ;
+  Select_elements_inline();
+  cin >> selection;
   
   switch(selection)
   {
     case 1 :
       {
         cout << "You have selected Rock." ;
+        print_rock();
         break;
       }
       
     case 2 :
       {
         cout << "You have selected paper." ;
+        print_paper();
         break;
       }
     case 3 :
       {
         cout << "You have selected Scissor." ;
+        printScissor();
         break;
       } 
       
@@ -177,9 +177,10 @@ for (int i = 0; i < 30; i ++) {
 
 
 void QuitGame()
-{
+{	
+  system("CLS");
+  cout << "Good bye !" ;
   exit(0);
-  cout << "Debugging - quit"; //for debugging
 }
 
 
@@ -202,7 +203,7 @@ void HighScoreViewer()
 
 void CompareSelection(int n)
 {
-
+  int wait;
   cout << "\nComputer is thinking about his openion XD\n" ;
 //	delay(2000) ;  
   
@@ -249,6 +250,13 @@ void CompareSelection(int n)
   else if(randomNum == n)
   {
     cout << "\nDraw\n";
+  }
+  
+
+  cout << "\nPress 1 to quit to title screen or press any number to replay.\n" ;
+  cin >> wait;
+  if(wait== 1){
+  	welcomeScreen();
   }
 
 }
@@ -359,12 +367,39 @@ cout <<  "        `8.`8' `8,`'         8 8888         8 8888        8888     ,88
 cout <<  "         `8.`   `8'          8 888888888888 8 888888888888 `8888888P'        `8888888P'  ,8'         `         `8.`8888. 8 888888888888 \n ";
 }
 
+void Select_elements_inline()
+{
+system("CLS");
+cout << "\n";
+cout << "..............@@@@@@@@@@@@.............|...................................|. . . . . . . . . . . . . . . .  . . . . . . .\n";
+cout << ".........  @@@@@@@@@@@@@@@@@...........|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..|. . . @@@@@@ . . . .  SCISSOR  . . . . . . . .\n";
+cout << "........@@@@@@@@@@@@@@@@@@@@@@@........|...@@@@@@@@@@@@@@@@           @@@..| . . @@@ @@@@@ . . . . . . . . . . . . .@@@@@.\n";
+cout << "......@@@@@@@@@@@@@@@@@@@@@@@@@@.......|...@@@@@@@@@@@@@@@@   Paper   @@@..|. . @@       @@ . . . . . . . . . @@@@@@@@. ..\n";
+cout << "....@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@.....|...@@@@@@@@@@@@@@@@           @@@..|. . . @@@@  @@@ . . . . . . . @@@@@@@@. . . ..\n";
+cout << "..@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@....|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..|. . . . .@@@@@@ . . . . .@@@@@@@@ . . . . . .\n";
+cout << ".@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@...|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..| . . . . . . . @@@@@ .@@@@@@@. . . . . . . . .\n";
+cout << ".@@@@@@@@@@@@   ROCK   @@@@@@@@@@@@@...|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..|. . . . . . . . . @@@@@@@ . . . . . . . . . ..\n";
+cout << "..@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@....|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..|. . . . . . . @@@@@@@ .@@@@@@ . . . . . . . ..\n";
+cout << "....@@@@@@@@@@@@@@@@@@@@@@@@@@@@@......|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..| . . . . @@@@@@@@@ . . . . @@@@@@@ . . . . . .\n";
+cout << ".....@@@@@@@@@@@@@@@@@@@@@@@@@@@.......|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..| . . @@@@       @@ . . . . . . @@@@@@@ . . . .\n";
+cout << ".......@@@@@@@@@@@@@@@@@@@@@@@.........|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..|. .@@@        @@@ . . . . . . . .  @@@@@@@  ..\n";
+cout << ".. ......@@@@@@@@@@@@@@@@@@@...........|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..|. . @@@@@@@@@@@ . . . . . . . . . . . .@@@@@..\n";
+cout << "...........@@@@@@@@@@@@@@@.............|...................................| . . . . . . . . . . . . . . . . . . . . . .  \n";
+cout << endl;  
+cout << "             | 1.Rock |                              |2.paper|                                   |3.Scissor|                \n";
+cout << endl;
+cout << "Enter the corresponding number : ";
+  
+}
 
-
-
-
-
-
+void print_main_menu()
+{
+cout<<  "88,dPYba,,adPYba,   ,adPPYba, 8b,dPPYba,  88       88\n" ;  
+cout<<  "88P     88      8a a8P_____88 88P      8a 88       88\n" ; 
+cout<<  "88      88      88 8PP        88       88 88       88\n" ; 
+cout<<  "88      88      88  8b,   ,aa 88       88  8a,   ,a88\n" ;  
+cout<<  "88      88      88    Ybbd8   88       88    YbbdP Y8\n" ;   
+}
 
 
 
