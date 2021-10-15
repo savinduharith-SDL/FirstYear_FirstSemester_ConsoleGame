@@ -62,7 +62,7 @@ void GameCore()
   int selection ;
   
   cout << "Please select the item\n" ;
-  cout << "1.Rock\n2.paper\n3.scisor \n :";
+  cout << "1.Rock\n2.paper\n3.scisor ";
   cin >> selection ;
   
   switch(selection)
