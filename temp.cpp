@@ -4,7 +4,8 @@
 #include <stdio.h>
 #include <unistd.h>
 #include<conio.h> // cls
-
+#include <windows.h>
+#include<iomanip>
 using namespace std;
 
 void welcomeScreen();
@@ -22,10 +23,21 @@ void print_welcome();
 void Select_elements_inline();
 void print_paper();
 void print_main_menu();
+
+
+
 int main()
-{	
+{ 
+    // Get console window handle
+  HWND wh = GetConsoleWindow();
+ 
+    // Move window to required position
+  MoveWindow(wh, 250, 50, 1100, 720, TRUE);
+  
   print_welcome();
   usleep(999999);
+  usleep(99999);
+  usleep(99999);
   usleep(99999);
   system("CLS");
   welcomeScreen();  
@@ -37,8 +49,7 @@ void welcomeScreen()
 {
   system("CLS");
   int userSelection;
-  print_main_menu();
-  cout << "1. Start\n2. Export\n3. HighScore\n4. Quit\n5. Credits :";
+  print_main_menu(); 
   cin >> userSelection;
   switch(userSelection)
   {
@@ -59,13 +70,13 @@ void welcomeScreen()
       }
     case 4:
       {
-        QuitGame();
+        credits();
         break;
       }
     case 5:
       {
-        credits();
-        break;
+        QuitGame();
+        break;        
       }
     default :
       {
@@ -355,16 +366,18 @@ void print_paper()
 
 void print_welcome()
 {
-cout <<  "`8.`888b                 ,8' 8 8888888888   8 8888         ,o888888o.        ,o888888o.           ,8.       ,8.          8 8888888888   \n ";
-cout <<  " `8.`888b               ,8'  8 8888         8 8888        8888     `88.   . 8888     `88.        ,888.     ,888.         8 8888         \n ";
-cout <<  "  `8.`888b             ,8'   8 8888         8 8888     ,8 8888       `8. ,8 8888       `8b      .`8888.   .`8888.        8 8888         \n ";
-cout <<  "   `8.`888b     .b    ,8'    8 8888         8 8888     88 8888           88 8888        `8b    ,8.`8888. ,8.`8888.       8 8888         \n ";
-cout <<  "    `8.`888b    88b  ,8'     8 888888888888 8 8888     88 8888           88 8888         88   ,8'8.`8888,8^8.`8888.      8 888888888888 \n ";
-cout <<  "     `8.`888b .`888b,8'      8 8888         8 8888     88 8888           88 8888         88  ,8' `8.`8888' `8.`8888.     8 8888         \n ";
-cout <<  "      `8.`888b8.`8888'       8 8888         8 8888     88 8888           88 8888        ,8P ,8'   `8.`88'   `8.`8888.    8 8888         \n ";
-cout <<  "       `8.`888`8.`88'        8 8888         8 8888     `8 8888       .8' `8 8888       ,8P ,8'     `8.`'     `8.`8888.   8 8888         \n ";
-cout <<  "        `8.`8' `8,`'         8 8888         8 8888        8888     ,88'   ` 8888     ,88' ,8'       `8        `8.`8888.  8 8888         \n ";
-cout <<  "         `8.`   `8'          8 888888888888 8 888888888888 `8888888P'        `8888888P'  ,8'         `         `8.`8888. 8 888888888888 \n ";
+cout << endl;cout << endl;
+cout << endl;cout << endl;cout << endl;cout << endl;cout << endl;cout << endl;cout << endl;cout << endl;cout << endl;cout << endl;cout << endl;  
+cout <<  "       `8.`888b                 ,8' 8 8888888888   8 8888         ,o888888o.        ,o888888o.           ,8.       ,8.          8 888888888888   \n ";
+cout <<  "       `8.`888b               ,8'  8 8888         8 8888        8888     `88.   . 8888     `88.        ,888.     ,888.         8 8888         \n ";
+cout <<  "        `8.`888b             ,8'   8 8888         8 8888     ,8 8888       `8. ,8 8888       `8b      .`8888.   .`8888.        8 8888         \n ";
+cout <<  "         `8.`888b     .b    ,8'    8 8888         8 8888     88 8888           88 8888        `8b    ,8.`8888. ,8.`8888.       8 8888         \n ";
+cout <<  "          `8.`888b    88b  ,8'     8 888888888888 8 8888     88 8888           88 8888         88   ,8'8.`8888,8^8.`8888.      8 888888888888 \n ";
+cout <<  "           `8.`888b .`888b,8'      8 8888         8 8888     88 8888           88 8888         88  ,8' `8.`8888' `8.`8888.     8 8888         \n ";
+cout <<  "            `8.`888b8.`8888'       8 8888         8 8888     88 8888           88 8888        ,8P ,8'   `8.`88'   `8.`8888.    8 8888         \n ";
+cout <<  "             `8.`888`8.`88'        8 8888         8 8888     `8 8888       .8' `8 8888       ,8P ,8'     `8.`'     `8.`8888.   8 8888         \n ";
+cout <<  "              `8.`8' `8,`'         8 8888         8 8888        8888     ,88'   ` 8888     ,88' ,8'       `8        `8.`8888.  8 8888         \n ";
+cout <<  "               `8.`   `8'          8 888888888888 8 888888888888 `8888888P'        `8888888P'  ,8'         `         `8.`8888. 8 888888888888 \n ";
 }
 
 void Select_elements_inline()
@@ -393,13 +406,32 @@ cout << "Enter the corresponding number : ";
 }
 
 void print_main_menu()
-{
-cout<<  "88,dPYba,,adPYba,   ,adPPYba, 8b,dPPYba,  88       88\n" ;  
-cout<<  "88P     88      8a a8P_____88 88P      8a 88       88\n" ; 
-cout<<  "88      88      88 8PP        88       88 88       88\n" ; 
-cout<<  "88      88      88  8b,   ,aa 88       88  8a,   ,a88\n" ;  
-cout<<  "88      88      88    Ybbd8   88       88    YbbdP Y8\n" ;   
+{cout << endl;cout << endl;
+cout << endl;cout << endl;cout << endl;cout << endl;cout << endl;cout << endl;cout << endl;cout << endl;cout << endl;cout << endl;cout << endl;  
+cout<< setw (100) << "88,dPYba,,adPYba,   ,adPPYba, 8b,dPPYba,  88       88\n" ;  
+cout<< setw (100) << "88P     88      8a a8P_____88 88P      8a 88       88\n" ; 
+cout<< setw (100) << "88      88      88 8PP        88       88 88       88\n" ; 
+cout<< setw (100) << "88      88      88  8b,   ,aa 88       88  8a,   ,a88\n" ;  
+cout<< setw (100) << "88      88      88    Ybbd8   88       88    YbbdP Y8\n" ; 
+cout << endl; 
+cout << "                                             __| |____________________________________________| |__\n";
+cout << "                                            (__   ____________________________________________   __)\n";
+cout << "                                               | |                                            | |\n";
+cout << "                                               | |                 1.Start                    | |\n";
+cout << "                                               | |                 2.Export                   | |\n";
+cout << "                                               | |                 3.High Score               | |\n";
+cout << "                                               | |                 4.Credits                  | |\n";
+cout << "                                               | |                 5.Quit                     | |\n";
+cout << "                                             __| |____________________________________________| |__\n";
+cout << "                                            (__   ____________________________________________   __)\n";
+cout << "                                               | |                                            | |\n";
 }
+
+
+
+
+
+
 
 
 
