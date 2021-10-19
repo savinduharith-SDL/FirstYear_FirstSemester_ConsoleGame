@@ -14,7 +14,7 @@ void QuitGame();
 void Export();
 void InvalidInput();
 void HighScoreViewer();
-void CompareSelection(int n);
+void CompareSelection(char n);
 bool gameLogic(int pcGenrated, int userSelection); 
 void printScissor();
 void print_rock();
@@ -23,8 +23,9 @@ void print_welcome();
 void Select_elements_inline();
 void print_paper();
 void print_main_menu();
-
-
+void loading();
+void youWin();
+void youLoss();
 
 int main()
 { 
@@ -32,7 +33,7 @@ int main()
   HWND wh = GetConsoleWindow();
  
     // Move window to required position
-  MoveWindow(wh, 250, 50, 1100, 720, TRUE);
+  MoveWindow(wh, 200, 0, 1200, 830, TRUE);
   
   print_welcome();
   usleep(999999);
@@ -46,41 +47,40 @@ int main()
 
 
 void welcomeScreen()
-{
+{ 
+  mainMenu:
   system("CLS");
-  int userSelection;
   print_main_menu(); 
-  cin >> userSelection;
-  switch(userSelection)
+  switch(getch())
   {
-    case 1:
+    case '1':
       {
         GameCore();
         break;
       }
-    case 2:
+    case '2':
       {
         Export();
         break;
       }
-    case 3:
+    case '3':
       {
         HighScoreViewer();
         break;
       }
-    case 4:
+    case '4':
       {
         credits();
         break;
       }
-    case 5:
+    case '5':
       {
         QuitGame();
         break;        
       }
     default :
       {
-        InvalidInput();
+        goto mainMenu;
         break;
       }
   }
@@ -94,33 +94,33 @@ void GameCore()
 while(true)
 { 
 
-  int selection ;
+
   Select_elements_inline();
-  cin >> selection;
-  
+  char selection = getch();
+  system("CLS");
   switch(selection)
   {
-    case 1 :
+    case '1' :
       {
-        cout << "You have selected Rock." ;
+        cout << "You have selected Rock.\n" ;
         print_rock();
         break;
       }
       
-    case 2 :
+    case '2' :
       {
-        cout << "You have selected paper." ;
+        cout << "You have selected paper.\n" ;
         print_paper();
         break;
       }
-    case 3 :
+    case '3' :
       {
-        cout << "You have selected Scissor." ;
+        cout << "You have selected Scissor.\n" ;
         printScissor();
         break;
       } 
       
-    case 4 :
+    case '4' :
       {
 				welcomeScreen() ;
         break;
@@ -145,11 +145,7 @@ while(true)
 void Export()
 {
   
-  
-  
-  
-  
-  
+ 
   
 }
 
@@ -212,10 +208,11 @@ void HighScoreViewer()
 
 
 
-void CompareSelection(int n)
+void CompareSelection(char n)
 {
-  int wait;
-  cout << "\nComputer is thinking about his openion XD\n" ;
+  
+  cout << "\nComputer is thinking about his openion XD" ;
+  loading();
 //	delay(2000) ;  
   
   //randomly generate;
@@ -225,17 +222,20 @@ void CompareSelection(int n)
   {
     case 1 :        
       {
-				cout << "\npc has selected rock";
+				cout << "\npc has selected rock\n";
+        print_rock();
         break;
       }
     case 2 :        
       {
-				cout << "\npc has selected paper";
+				cout << "\npc has selected paper\n";
+        print_paper();
         break;
       }		
     case 3:
       {
-        cout << "\npc has selected scissor";
+        cout << "\npc has selected scissor\n";
+        printScissor();
         break;
       }
      default:
@@ -245,28 +245,32 @@ void CompareSelection(int n)
     
   }
   
+
+  int integerN = n ;
+  integerN = integerN - 48 ;
   
-  if(randomNum != n)
+  
+  if(integerN != randomNum)
   {
-    bool status = gameLogic(randomNum, n);
+    bool status = gameLogic(randomNum, integerN);
     if(status)
     {
-      cout<< "\nYou won the game!\n";
+      youWin() ;
     }
     else
     {
-      cout<< "\nYou lose the game!\n";
+     youLoss() ;
     }
   }
-  else if(randomNum == n)
+  else if(integerN == randomNum)
   {
     cout << "\nDraw\n";
   }
   
 
   cout << "\nPress 1 to quit to title screen or press any number to replay.\n" ;
-  cin >> wait;
-  if(wait== 1){
+  
+  if(getch()== '1'){
   	welcomeScreen();
   }
 
@@ -368,7 +372,7 @@ void print_welcome()
 {
 cout << endl;cout << endl;
 cout << endl;cout << endl;cout << endl;cout << endl;cout << endl;cout << endl;cout << endl;cout << endl;cout << endl;cout << endl;cout << endl;  
-cout <<  "       `8.`888b                 ,8' 8 8888888888   8 8888         ,o888888o.        ,o888888o.           ,8.       ,8.          8 888888888888   \n ";
+cout <<  "       `8.`888b                 ,8' 8 8888888888   8 8888         ,o888888o.        ,o888888o.           ,8.      ,8.          8 888888888888   \n ";
 cout <<  "       `8.`888b               ,8'  8 8888         8 8888        8888     `88.   . 8888     `88.        ,888.     ,888.         8 8888         \n ";
 cout <<  "        `8.`888b             ,8'   8 8888         8 8888     ,8 8888       `8. ,8 8888       `8b      .`8888.   .`8888.        8 8888         \n ";
 cout <<  "         `8.`888b     .b    ,8'    8 8888         8 8888     88 8888           88 8888        `8b    ,8.`8888. ,8.`8888.       8 8888         \n ";
@@ -384,25 +388,36 @@ void Select_elements_inline()
 {
 system("CLS");
 cout << "\n";
-cout << "..............@@@@@@@@@@@@.............|...................................|. . . . . . . . . . . . . . . .  . . . . . . .\n";
-cout << ".........  @@@@@@@@@@@@@@@@@...........|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..|. . . @@@@@@ . . . .  SCISSOR  . . . . . . . .\n";
-cout << "........@@@@@@@@@@@@@@@@@@@@@@@........|...@@@@@@@@@@@@@@@@           @@@..| . . @@@ @@@@@ . . . . . . . . . . . . .@@@@@.\n";
-cout << "......@@@@@@@@@@@@@@@@@@@@@@@@@@.......|...@@@@@@@@@@@@@@@@   Paper   @@@..|. . @@       @@ . . . . . . . . . @@@@@@@@. ..\n";
-cout << "....@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@.....|...@@@@@@@@@@@@@@@@           @@@..|. . . @@@@  @@@ . . . . . . . @@@@@@@@. . . ..\n";
-cout << "..@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@....|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..|. . . . .@@@@@@ . . . . .@@@@@@@@ . . . . . .\n";
-cout << ".@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@...|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..| . . . . . . . @@@@@ .@@@@@@@. . . . . . . . .\n";
-cout << ".@@@@@@@@@@@@   ROCK   @@@@@@@@@@@@@...|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..|. . . . . . . . . @@@@@@@ . . . . . . . . . ..\n";
-cout << "..@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@....|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..|. . . . . . . @@@@@@@ .@@@@@@ . . . . . . . ..\n";
-cout << "....@@@@@@@@@@@@@@@@@@@@@@@@@@@@@......|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..| . . . . @@@@@@@@@ . . . . @@@@@@@ . . . . . .\n";
-cout << ".....@@@@@@@@@@@@@@@@@@@@@@@@@@@.......|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..| . . @@@@       @@ . . . . . . @@@@@@@ . . . .\n";
-cout << ".......@@@@@@@@@@@@@@@@@@@@@@@.........|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..|. .@@@        @@@ . . . . . . . .  @@@@@@@  ..\n";
-cout << ".. ......@@@@@@@@@@@@@@@@@@@...........|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..|. . @@@@@@@@@@@ . . . . . . . . . . . .@@@@@..\n";
-cout << "...........@@@@@@@@@@@@@@@.............|...................................| . . . . . . . . . . . . . . . . . . . . . .  \n";
+cout << "\n";
+cout << "\n";
+cout << "\n";
+cout << "\n";
+cout << "\n";
+cout << "\n";
+cout << "\n";
+cout << "\n";
+cout << "\n";
+cout << "                                                     Press the corresponding number\n";
+cout << "\n";
+cout << "\n";
+cout << "           ..............@@@@@@@@@@@@.............|...................................|. . . . . . . . . . . . . . . .  . . . . . . .\n";
+cout << "           .........  @@@@@@@@@@@@@@@@@...........|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..|. . . @@@@@@ . . . .  SCISSOR  . . . . . . . .\n";
+cout << "           ........@@@@@@@@@@@@@@@@@@@@@@@........|...@@@@@@@@@@@@@@@@           @@@..| . . @@@ @@@@@ . . . . . . . . . . . . .@@@@@.\n";
+cout << "           ......@@@@@@@@@@@@@@@@@@@@@@@@@@.......|...@@@@@@@@@@@@@@@@   Paper   @@@..|. . @@       @@ . . . . . . . . . @@@@@@@@. ..\n";
+cout << "           ....@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@.....|...@@@@@@@@@@@@@@@@           @@@..|. . . @@@@  @@@ . . . . . . . @@@@@@@@. . . ..\n";
+cout << "           ..@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@....|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..|. . . . .@@@@@@ . . . . .@@@@@@@@ . . . . . .\n";
+cout << "           .@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@...|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..| . . . . . . . @@@@@ .@@@@@@@. . . . . . . . .\n";
+cout << "           .@@@@@@@@@@@@   ROCK   @@@@@@@@@@@@@...|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..|. . . . . . . . . @@@@@@@ . . . . . . . . . ..\n";
+cout << "           ..@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@....|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..|. . . . . . . @@@@@@@ .@@@@@@ . . . . . . . ..\n";
+cout << "           ....@@@@@@@@@@@@@@@@@@@@@@@@@@@@@......|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..| . . . . @@@@@@@@@ . . . . @@@@@@@ . . . . . .\n";
+cout << "           .....@@@@@@@@@@@@@@@@@@@@@@@@@@@.......|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..| . . @@@@       @@ . . . . . . @@@@@@@ . . . .\n";
+cout << "           .......@@@@@@@@@@@@@@@@@@@@@@@.........|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..|. .@@@        @@@ . . . . . . . .  @@@@@@@  ..\n";
+cout << "           .........@@@@@@@@@@@@@@@@@@@...........|...@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@..|. . @@@@@@@@@@@ . . . . . . . . . . . .@@@@@..\n";
+cout << "           ...........@@@@@@@@@@@@@@@.............|...................................| . . . . . . . . . . . . . . . . . . . . . .  \n";
 cout << endl;  
-cout << "             | 1.Rock |                              |2.paper|                                   |3.Scissor|                \n";
+cout << "                        | 1.Rock |                              |2.paper|                                   |3.Scissor|                \n";
 cout << endl;
-cout << "Enter the corresponding number : ";
-  
+
 }
 
 void print_main_menu()
@@ -427,28 +442,129 @@ cout << "                                            (__   _____________________
 cout << "                                               | |                                            | |\n";
 }
 
+void loading()
+{
+  for(int i=0; i< 3;i++)
+  {
+    cout <<" .";
+    usleep(999999);
+  }
+  cout <<"\n";
+}
+
+
+
+void youWin()
+{
+usleep(999999);
+usleep(999999);
+system("CLS");  
+cout << "YYYYYYY       YYYYYYY     OOOOOOOOO     UUUUUUUU     UUUUUUUU     WWWWWWWW                           WWWWWWWW     OOOOOOOOO     NNNNNNNN        NNNNNNNN\n";
+cout << "Y:::::Y       Y:::::Y   OO:::::::::OO   U::::::U     U::::::U     W::::::W                           W::::::W   OO:::::::::OO   N:::::::N       N::::::N\n";
+cout << "Y:::::Y       Y:::::Y OO:::::::::::::OO U::::::U     U::::::U     W::::::W                           W::::::W OO:::::::::::::OO N::::::::N      N::::::N\n";
+cout << "Y::::::Y     Y::::::YO:::::::OOO:::::::OUU:::::U     U:::::UU     W::::::W                           W::::::WO:::::::OOO:::::::ON:::::::::N     N::::::N\n";
+cout << "YYY:::::Y   Y:::::YYYO::::::O   O::::::O U:::::U     U:::::U       W:::::W           WWWWW           W:::::W O::::::O   O::::::ON::::::::::N    N::::::N\n";
+cout << "   Y:::::Y Y:::::Y   O:::::O     O:::::O U:::::D     D:::::U        W:::::W         W:::::W         W:::::W  O:::::O     O:::::ON:::::::::::N   N::::::N\n";
+cout << "    Y:::::Y:::::Y    O:::::O     O:::::O U:::::D     D:::::U         W:::::W       W:::::::W       W:::::W   O:::::O     O:::::ON:::::::N::::N  N::::::N\n";
+cout << "     Y:::::::::Y     O:::::O     O:::::O U:::::D     D:::::U          W:::::W     W:::::::::W     W:::::W    O:::::O     O:::::ON::::::N N::::N N::::::N\n";
+cout << "      Y:::::::Y      O:::::O     O:::::O U:::::D     D:::::U           W:::::W   W:::::W:::::W   W:::::W     O:::::O     O:::::ON::::::N  N::::N:::::::N\n";
+cout << "       Y:::::Y       O:::::O     O:::::O U:::::D     D:::::U            W:::::W W:::::W W:::::W W:::::W      O:::::O     O:::::ON::::::N   N:::::::::::N\n";
+cout << "       Y:::::Y       O:::::O     O:::::O U:::::D     D:::::U             W:::::W:::::W   W:::::W:::::W       O:::::O     O:::::ON::::::N    N::::::::::N\n";
+cout << "       Y:::::Y       O::::::O   O::::::O U::::::U   U::::::U              W:::::::::W     W:::::::::W        O::::::O   O::::::ON::::::N     N:::::::::N\n";
+cout << "       Y:::::Y       O:::::::OOO:::::::O U:::::::UUU:::::::U               W:::::::W       W:::::::W         O:::::::OOO:::::::ON::::::N      N::::::::N\n";
+cout << "    YYYY:::::YYYY     OO:::::::::::::OO   UU:::::::::::::UU                 W:::::W         W:::::W           OO:::::::::::::OO N::::::N       N:::::::N\n";
+cout << "    Y:::::::::::Y       OO:::::::::OO       UU:::::::::UU                    W:::W           W:::W              OO:::::::::OO   N::::::N        N::::::N\n";
+cout << "    YYYYYYYYYYYYY         OOOOOOOOO           UUUUUUUUU                       WWW             WWW                 OOOOOOOOO     NNNNNNNN         NNNNNNN\n";  
+cout << endl ;  
+cout << endl ;
+cout << "                                                                            ¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶                 \n" ;
+cout << "                                                                           ¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶                \n" ;
+cout << "                                                                      ¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶           \n" ;
+cout << "                                                                     ¶¶¶¶¶¶¶               ¶¶¶¶¶¶¶          \n" ;
+cout << "                                                                  ¶¶¶¶¶                         ¶¶¶¶¶       \n" ;
+cout << "                                                                 ¶¶¶¶¶                           ¶¶¶¶¶      \n" ;
+cout << "                                                               ¶¶¶¶                                 ¶¶¶¶    \n" ;
+cout << "                                                               ¶¶¶¶                                 ¶¶¶¶    \n" ;
+cout << "                                                               ¶¶¶¶     ¶¶¶¶¶¶¶         ¶¶¶¶¶¶¶     ¶¶¶¶    \n" ;
+cout << "                                                              ¶¶¶       ¶¶¶¶¶¶¶         ¶¶¶¶¶¶¶       ¶¶¶¶¶¶\n" ;
+cout << "                                                            ¶¶¶¶        ¶¶¶¶¶¶¶         ¶¶¶¶¶¶¶         ¶¶¶¶\n" ;
+cout << "                                                            ¶¶¶¶                                        ¶¶¶¶\n" ;
+cout << "                                                            ¶¶¶¶                                        ¶¶¶¶\n" ;
+cout << "                                                            ¶¶¶¶                                        ¶¶¶¶\n" ;
+cout << "                                                            ¶¶¶¶                                        ¶¶¶¶\n" ;
+cout << "                                                            ¶¶¶¶                                        ¶¶¶¶\n" ;
+cout << "                                                            ¶¶¶¶      ¶                         ¶       ¶¶¶¶\n" ;
+cout << "                                                            ¶¶¶¶     ¶¶¶¶                     ¶¶¶¶      ¶¶¶¶\n" ;
+cout << "                                                              ¶¶¶     ¶¶¶¶¶                 ¶¶¶¶¶     ¶¶¶¶¶¶\n" ;
+cout << "                                                               ¶¶¶¶     ¶¶¶¶               ¶¶¶¶     ¶¶¶¶    \n" ;
+cout << "                                                               ¶¶¶¶       ¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶       ¶¶¶¶    \n" ;
+cout << "                                                               ¶¶¶¶         ¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶         ¶¶¶¶    \n" ;
+cout << "                                                                 ¶¶¶¶¶                           ¶¶¶¶¶      \n" ;
+cout << "                                                                  ¶¶¶¶¶                         ¶¶¶¶¶       \n" ;
+cout << "                                                                     ¶¶¶¶¶¶¶               ¶¶¶¶¶¶¶          \n" ;
+cout << "                                                                      ¶¶¶¶¶¶               ¶¶¶¶¶¶           \n" ;
+cout << "                                                                            ¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶                 \n" ;
+cout << "                                                                            ¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶                 \n" ;
+                                                      
+  
+}
 
 
 
 
 
+void youLoss()
+{
+usleep(999999);
+usleep(999999);  
+system("CLS");  
+cout << "YYYYYYY       YYYYYYY     OOOOOOOOO     UUUUUUUU     UUUUUUUU     LLLLLLLLLLL                  OOOOOOOOO        SSSSSSSSSSSSSSS TTTTTTTTTTTTTTTTTTTTTTT\n" ;
+cout << "Y:::::Y       Y:::::Y   OO:::::::::OO   U::::::U     U::::::U     L:::::::::L                OO:::::::::OO    SS:::::::::::::::ST:::::::::::::::::::::T\n" ;
+cout << "Y:::::Y       Y:::::Y OO:::::::::::::OO U::::::U     U::::::U     L:::::::::L              OO:::::::::::::OO S:::::SSSSSS::::::ST:::::::::::::::::::::T\n" ;
+cout << "Y::::::Y     Y::::::YO:::::::OOO:::::::OUU:::::U     U:::::UU     LL:::::::LL             O:::::::OOO:::::::OS:::::S     SSSSSSST:::::TT:::::::TT:::::T\n" ;
+cout << "YYY:::::Y   Y:::::YYYO::::::O   O::::::O U:::::U     U:::::U        L:::::L               O::::::O   O::::::OS:::::S            TTTTTT  T:::::T  TTTTTT\n" ;
+cout << "   Y:::::Y Y:::::Y   O:::::O     O:::::O U:::::D     D:::::U        L:::::L               O:::::O     O:::::OS:::::S                    T:::::T        \n" ;
+cout << "    Y:::::Y:::::Y    O:::::O     O:::::O U:::::D     D:::::U        L:::::L               O:::::O     O:::::O S::::SSSS                 T:::::T        \n" ;
+cout << "     Y:::::::::Y     O:::::O     O:::::O U:::::D     D:::::U        L:::::L               O:::::O     O:::::O  SS::::::SSSSS            T:::::T        \n" ;
+cout << "      Y:::::::Y      O:::::O     O:::::O U:::::D     D:::::U        L:::::L               O:::::O     O:::::O    SSS::::::::SS          T:::::T        \n" ;
+cout << "       Y:::::Y       O:::::O     O:::::O U:::::D     D:::::U        L:::::L               O:::::O     O:::::O       SSSSSS::::S         T:::::T        \n" ;
+cout << "       Y:::::Y       O:::::O     O:::::O U:::::D     D:::::U        L:::::L               O:::::O     O:::::O            S:::::S        T:::::T        \n" ;
+cout << "       Y:::::Y       O::::::O   O::::::O U::::::U   U::::::U        L:::::L         LLLLLLO::::::O   O::::::O            S:::::S        T:::::T        \n" ;
+cout << "       Y:::::Y       O:::::::OOO:::::::O U:::::::UUU:::::::U      LL:::::::LLLLLLLLL:::::LO:::::::OOO:::::::OSSSSSSS     S:::::S      TT:::::::TT      \n" ;
+cout << "    YYYY:::::YYYY     OO:::::::::::::OO   UU:::::::::::::UU       L::::::::::::::::::::::L OO:::::::::::::OO S::::::SSSSSS:::::S      T:::::::::T      \n" ;
+cout << "    Y:::::::::::Y       OO:::::::::OO       UU:::::::::UU         L::::::::::::::::::::::L   OO:::::::::OO   S:::::::::::::::SS       T:::::::::T      \n" ;
+cout << "    YYYYYYYYYYYYY         OOOOOOOOO           UUUUUUUUU           LLLLLLLLLLLLLLLLLLLLLLLL     OOOOOOOOO      SSSSSSSSSSSSSSS         TTTTTTTTTTT  	\n" ;
+cout << endl ;
+cout << endl ;
+cout << "                                                          ¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶      \n "; 
+cout << "                                                       ¶¶¶¶¶¶             ¶¶¶¶¶¶        \n "; 
+cout << "                                                      ¶¶¶¶¶                 ¶¶¶¶¶¶       \n ";
+cout << "                                                     ¶¶¶¶                     ¶¶¶¶¶      \n ";
+cout << "                                                    ¶¶¶¶                       ¶¶¶¶¶     \n ";
+cout << "                                                   ¶¶¶¶     ¶¶¶¶       ¶¶¶¶      ¶¶¶     \n ";
+cout << "                                                   ¶¶¶     ¶¶¶¶¶¶     ¶¶¶¶¶¶     ¶¶¶¶    \n ";
+cout << "                                                  ¶¶¶¶     ¶¶¶¶¶¶     ¶¶¶¶¶¶      ¶¶¶    \n ";
+cout << "                                                  ¶¶¶       ¶¶¶¶       ¶¶¶¶       ¶¶¶¶   \n ";
+cout << "                                                  ¶¶¶                              ¶¶¶   \n ";
+cout << "                                                  ¶¶¶                              ¶¶¶   \n ";
+cout << "                                                  ¶¶¶                              ¶¶¶   \n ";
+cout << "                                                  ¶¶¶            ¶¶¶¶¶            ¶¶¶¶   \n ";
+cout << "                                                  ¶¶¶¶        ¶¶¶¶¶¶¶¶¶¶¶         ¶¶¶    \n ";
+cout << "                                                   ¶¶¶      ¶¶¶¶¶     ¶¶¶¶¶      ¶¶¶¶    \n ";
+cout << "                                                   ¶¶¶¶    ¶¶¶           ¶¶¶    ¶¶¶¶     \n ";
+cout << "                                                    ¶¶¶¶   ¶¶             ¶¶   ¶¶¶¶      \n ";
+cout << "                                                     ¶¶¶¶                    ¶¶¶¶¶       \n ";
+cout << "                                                      ¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶        \n ";
+cout << "                                                        ¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶          \n ";
+    
+}
 
 
 
 
 
+      
  
-
-
-
-
-
-
-
-
-
-
-
 
 
 
