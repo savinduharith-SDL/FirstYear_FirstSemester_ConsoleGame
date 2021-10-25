@@ -26,6 +26,12 @@ void print_main_menu();
 void loading();
 void youWin();
 void youLoss();
+void print_HighScoreMenu();
+void fileHandler();
+
+int highScore = 99999;
+FILE *saveFile;
+
 
 int main()
 { 
@@ -37,6 +43,7 @@ int main()
   
   print_welcome();
   usleep(999999);
+  fileHandler();
   usleep(99999);
   usleep(99999);
   usleep(99999);
@@ -50,6 +57,7 @@ void welcomeScreen()
 { 
   mainMenu:
   system("CLS");
+  cout << "HighScore is : "<<highScore;
   print_main_menu(); 
   switch(getch())
   {
@@ -203,7 +211,12 @@ void InvalidInput()
 
 void HighScoreViewer()
 {
-	
+  system("CLS");
+  print_HighScoreMenu();
+  if(getch())
+  {
+    welcomeScreen();
+  }
 }
 
 
@@ -312,6 +325,19 @@ bool gameLogic(int pcGenrated, int userSelection)
   }
 }
 
+void fileHandler()
+{
+  saveFile = fopen("saveFile.bin","r");
+  if(saveFile == NULL)
+  {
+    saveFile = fopen("saveFile.bin","w");
+    putw(highScore,saveFile);
+    fclose(saveFile);
+    saveFile = fopen("saveFile.bin","r");
+  }
+  highScore = getw(saveFile);
+  fclose(saveFile);
+}
 
 void printScissor()
 {
@@ -442,6 +468,21 @@ cout << "                                            (__   _____________________
 cout << "                                               | |                                            | |\n";
 }
 
+void print_HighScoreMenu()
+{
+cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"; 
+cout << "                                             __| |____________________________________________| |__\n";
+cout << "                                            (__   ____________________________________________   __)\n";
+cout << "                                               | |                                            | |\n";
+cout << "                                               | |          The current High Score :          | |\n";
+cout << "                                               | |                                            | |\n";
+cout << "                                               | |                    "<<setw (5)<<highScore<<"                   | |\n";
+cout << "                                               | |                                            | |\n";
+cout << "                                               | |    Press any key to return to main menu    | |\n";
+cout << "                                             __| |____________________________________________| |__\n";
+cout << "                                            (__   ____________________________________________   __)\n";
+cout << "                                               | |                                            | |\n"; 
+}
 void loading()
 {
   for(int i=0; i< 3;i++)
@@ -558,6 +599,8 @@ cout << "                                                      ¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
 cout << "                                                        ¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶          \n ";
     
 }
+
+
 
 
 
