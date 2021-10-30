@@ -6,12 +6,13 @@
 #include<conio.h> // cls
 #include <windows.h>
 #include<iomanip>
+#include<string>
 using namespace std;
 
 void welcomeScreen();
 void GameCore();
 void QuitGame();
-void Export();
+void Instructions();
 void InvalidInput();
 void HighScoreViewer();
 void CompareSelection(char n);
@@ -29,8 +30,12 @@ void youLoss();
 void print_HighScoreMenu();
 void fileHandler();
 
-int highScore = 99999;
+int highScore = 0;
+int scoreIncrementUnit = 10;
+int scoreDecrementUnit = 5;
+int userScore = 0;
 FILE *saveFile;
+string instructions = "start https://youtu.be/wLtNluerX1k";
 
 
 int main()
@@ -68,7 +73,7 @@ void welcomeScreen()
       }
     case '2':
       {
-        Export();
+        Instructions();
         break;
       }
     case '3':
@@ -150,11 +155,14 @@ while(true)
 }
 
 
-void Export()
+void Instructions()
 {
-  
- 
-  
+  system("CLS");
+  system(instructions.c_str());
+  cout <<  "Instruction video will be opend!\n";
+  cout << "Please wait";
+  loading();
+  welcomeScreen();
 }
 
 void credits()
@@ -269,10 +277,12 @@ void CompareSelection(char n)
     if(status)
     {
       youWin() ;
+      userScore += scoreIncrementUnit;
     }
     else
     {
      youLoss() ;
+     userScore -= scoreDecrementUnit;
     }
   }
   else if(integerN == randomNum)
@@ -284,6 +294,14 @@ void CompareSelection(char n)
   cout << "\nPress 1 to quit to title screen or press any number to replay.\n" ;
   
   if(getch()== '1'){
+  	if(highScore < userScore)
+  	{
+  		saveFile =  fopen("saveFile.bin","w");
+  		highScore = userScore;
+  		putw(highScore,saveFile);
+  		fclose(saveFile);
+  		userScore = 0;
+	}
   	welcomeScreen();
   }
 
@@ -413,6 +431,7 @@ cout <<  "               `8.`   `8'          8 888888888888 8 888888888888 `8888
 void Select_elements_inline()
 {
 system("CLS");
+cout << "Score : " << userScore;
 cout << "\n";
 cout << "\n";
 cout << "\n";
@@ -459,7 +478,7 @@ cout << "                                             __| |_____________________
 cout << "                                            (__   ____________________________________________   __)\n";
 cout << "                                               | |                                            | |\n";
 cout << "                                               | |                 1.Start                    | |\n";
-cout << "                                               | |                 2.Export                   | |\n";
+cout << "                                               | |                 2.Instructions             | |\n";
 cout << "                                               | |                 3.High Score               | |\n";
 cout << "                                               | |                 4.Credits                  | |\n";
 cout << "                                               | |                 5.Quit                     | |\n";
