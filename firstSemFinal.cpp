@@ -40,7 +40,6 @@ int userScore = 0;
 FILE *saveFile;
 string instructions = "start https://youtu.be/wLtNluerX1k";
 
-
 int main()
 { 
     // Get console window handle
@@ -370,7 +369,7 @@ void CompareSelection(char n)
 
 }
 
-//This function will contains the basic game logic of the game.
+//This function contains the basic game logic of the game.
 bool gameLogic(int pcGenrated, int userSelection) 
 {
   //1-rock,2-paper,3-scissor
@@ -477,7 +476,7 @@ void print_paper()
 }
 
 
-//This will peints the ascii art off the welcom text.
+//This will prints the ascii art off the welcome text.
 void print_welcome()
 {
 cout << endl;cout << endl;
